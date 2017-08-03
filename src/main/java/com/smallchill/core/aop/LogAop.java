@@ -41,6 +41,7 @@ public class LogAop {
 		if(!BladeLogManager.isDoLog()){
 			return point.proceed();
 		}
+
 		MethodSignature ms = (MethodSignature) point.getSignature();
 		Method method = ms.getMethod();
 		String methodName = ms.getName();

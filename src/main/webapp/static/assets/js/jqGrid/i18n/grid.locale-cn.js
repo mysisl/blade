@@ -101,8 +101,8 @@ $.extend($.jgrid,{
             ],
             AmPm : ["am","pm","上午","下午"],
             S: function (j) {return j < 11 || j > 13 ? ['st', 'nd', 'rd', 'th'][Math.min((j - 1) % 10, 3)] : 'th';},
-            srcformat: 'Y-m-d',
-            newformat: 'Y-m-d',
+            srcformat: 'Y-m-d H:i:s',
+            newformat: 'Y-m-d H:i:s',
             parseRe : /[#%\\\/:_;.,\t\s-]/,
             masks : {
                 // see http://php.net/manual/en/function.date.php for PHP format used in jqGrid

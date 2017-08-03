@@ -26,10 +26,15 @@ import com.smallchill.core.base.controller.BladeController;
  */
 public class AopContext {
 
-	/**
-	 * 当前控制器
-	 */
-	private BladeController ctrl;
+
+    /**
+     * 安全性控制器
+     */
+    private Integer viewmode;
+    /**
+     * 当前控制器
+     */
+    private BladeController ctrl;
 
 	/**
 	 * 视图
@@ -218,9 +223,16 @@ public class AopContext {
 		return tips;
 	}
 
-	public void setTips(String tips) {
-		this.tips = tips;
-	}
+    public void setTips(String tips) {
+        this.tips = tips;
+    }
 
+    public Integer getViewmode() {
+        return viewmode;
+    }
+
+    public void setViewmode(Integer viewmode) {
+        this.viewmode = viewmode;
+    }
 
 }

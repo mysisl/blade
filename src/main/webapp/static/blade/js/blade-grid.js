@@ -297,9 +297,9 @@
                     }
                     return;
                 }
-                let checkBoxes = par.find("input[name='" + me.table + "_grid_checkbox']");
-                for (let i = 0; i < checkBoxes.length; i++) {
-                    let check_key = $(checkBoxes[i]).attr("data-key");
+                var checkBoxes = par.find("input[name='" + me.table + "_grid_checkbox']");
+                for (var i = 0; i < checkBoxes.length; i++) {
+                    var check_key = $(checkBoxes[i]).attr("data-key");
                     me.keys.remove(check_key);
                     $(checkBoxes[i]).prop("checked", false);
                     $(checkBoxes[i]).closest('tr').removeAttr("style");

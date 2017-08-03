@@ -47,6 +47,7 @@ public class ShiroUser implements Serializable {
 	private Object subDepts;// 子部门集合
 	private Object subRoles;// 子角色集合
 	private Object subUsers;// 子账号集合
+    private Integer currentRoleId;   // 当前角色
 
 	@SuppressWarnings("rawtypes")
 	public ShiroUser(Object id, Object deptId, String loginName, String name, List<Integer> roleList) {
@@ -56,11 +57,12 @@ public class ShiroUser implements Serializable {
 		this.loginName = loginName;
 		this.name = name;
 		this.roleList = roleList;
-		this.roles = CollectionKit.join(roleList.toArray(), ",");
-		
-		// 递归查找上级部门id集合
-		String superDeptSql;
-		String superDepts = null;
+        this.currentRoleId = roleList.get(0);
+        this.roles = CollectionKit.join(roleList.toArray(), ",");
+
+        // 递归查找上级部门id集合
+        String superDeptSql;
+        String superDepts = null;
 		if (Func.isOracle()) {
 			superDeptSql = "select wm_concat(ID) subDepts from (select ID,PID,SIMPLENAME from blade_dept start with ID in (#{join(deptIds)}) connect by prior PID=ID order by ID) a where a.ID not in (#{join(deptIds)})";
 			superDepts = Db.queryStr(superDeptSql, CMap.init().set("deptIds", Convert.toIntArray(deptId.toString())));
@@ -155,6 +157,14 @@ public class ShiroUser implements Serializable {
 		
 		this.subUsers = StrKit.removeSuffix(sbUser.toString(), ","); 
 	}
+
+    public Integer getCurrentRoleId() {
+        return currentRoleId;
+    }
+
+    public void setCurrentRoleId(Integer currentRoleId) {
+        this.currentRoleId = currentRoleId;
+    }
 
 	public Object getId() {
 		return id;

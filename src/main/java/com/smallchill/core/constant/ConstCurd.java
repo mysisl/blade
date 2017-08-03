@@ -70,7 +70,35 @@ public interface ConstCurd {
 	 * 定义还原操作key
 	 */
 	String KEY_RESTORE = "/restore";
-	
+
+    /**
+     * 数据安全性KEY, 所有
+     */
+    Integer SEC_ALL = 5;
+    /**
+     * 数据安全性KEY, 角色
+     */
+    Integer SEC_ROLE = 1;
+    /**
+     * 数据安全性KEY, 跨角色
+     */
+    Integer SEC_SUBROLE = 2;
+    /**
+     * 数据安全性KEY, 部门
+     */
+    Integer SEC_DEPT = 3;
+
+    /**
+     * 数据安全性KEY, 跨部门
+     */
+    Integer SEC_SUBDEPT = 4;
+
+
+
+
+
+
+
 	/**
 	 * 新增成功
 	 */

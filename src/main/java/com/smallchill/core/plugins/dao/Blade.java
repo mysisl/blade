@@ -16,10 +16,14 @@
 package com.smallchill.core.plugins.dao;
 
 import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.smallchill.core.base.model.BaseModel;
+import com.smallchill.core.base.model.DataModel;
+import com.smallchill.core.shiro.ShiroKit;
 import org.beetl.sql.core.SQLManager;
 import org.beetl.sql.core.annotatoin.Table;
 import org.beetl.sql.core.db.ClassDesc;
@@ -423,7 +427,7 @@ public class Blade {
 		if(Func.isEmpty(idValue)){
 			throw new RuntimeException("未取到ID的值,无法修改!");
 		}
-		
+
 		if(Cst.me().isOptimisticLock()){
 			// 1.数据是否还存在
 			String sqlExist = new StringBuffer("select * from ").append(table).append(" where ").append(pk).append(" = #{idValue} ").toString();
@@ -784,7 +788,43 @@ public class Blade {
 		}
 		return idValue;
 	}
-	
+
+	/**
+	 * 为BaseModel 对象的通用字段设置值
+	 *
+	 * @param model
+	 * @return
+	 */
+	public Object baseCreate(Object model) {
+		BaseModel dataObj = (DataModel) model;
+		if (BaseModel.class.isAssignableFrom(modelClass)) {
+			dataObj.setCreated(new Date());
+			dataObj.setCreatedBy((Integer) ShiroKit.getUser().getId());
+			dataObj.setUpdated(new Date());
+			dataObj.setUpdatedBy((Integer) ShiroKit.getUser().getId());
+			dataObj.setVersion(0);
+		}
+		return dataObj;
+	}
+
+	/**
+	 * 为BaseModel 对象的通用字段设置值
+	 *
+	 * @param model
+	 * @return
+	 */
+	public Object baseUpdate(Object model) {
+		BaseModel dataObj = (DataModel) model;
+		if (DataModel.class.isAssignableFrom(modelClass)) {
+			dataObj.setUpdated(new Date());
+			dataObj.setUpdatedBy((Integer) ShiroKit.getUser().getId());
+			dataObj.setVersion(dataObj.getVersion() == null
+					? 0 : dataObj.getVersion() + 1);
+			model = dataObj;
+		}
+		return dataObj;
+	}
+
 	/*************************************************************************************************/
 
 	private String getSet(String set) {

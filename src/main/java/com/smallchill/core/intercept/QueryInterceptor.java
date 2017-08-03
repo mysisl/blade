@@ -25,8 +25,8 @@ public class QueryInterceptor implements IQuery{
 
 	@Override
 	public void queryBefore(AopContext ac) {
-		
-	}
+        System.out.print(ac.getSql());
+    }
 
 	@Override
 	public void queryAfter(AopContext ac) {

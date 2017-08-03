@@ -25,6 +25,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.smallchill.core.meta.MetaTool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -61,7 +62,7 @@ import com.smallchill.core.toolbox.support.WafRequestWrapper;
 /**
  * Blade控制器封装类
  */
-public class BladeController {
+public class BladeController extends MetaTool {
 
 	protected Logger LOGGER = LogManager.getLogger(this.getClass());
 	
@@ -187,7 +188,7 @@ public class BladeController {
 
 	/**   
 	 * 页面跳转
-	 * @param 路径
+	 * @param url 路径
 	*/
 	public String redirect(String url) {
 		return StrKit.format("redirect:{}", url);
@@ -195,8 +196,8 @@ public class BladeController {
 	
 	/**
 	 * 对象是否为空
-	 * 
-	 * @param obj String,List,Map,Object[],int[],long[]
+	 *
+	 * @param o String,List,Map,Object[],int[],long[]
 	 * @return
 	 */
 	public boolean isEmpty(Object o) {
@@ -205,8 +206,8 @@ public class BladeController {
 	
 	/**
 	 * 对象是否不为空
-	 * 
-	 * @param obj String,List,Map,Object[],int[],long[]
+	 *
+	 * @param o String,List,Map,Object[],int[],long[]
 	 * @return
 	 */
 	public boolean notEmpty(Object o) {

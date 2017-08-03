@@ -20,6 +20,10 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.smallchill.core.base.model.BaseModel;
+import com.smallchill.core.exception.NoInitControllerException;
+import com.smallchill.system.meta.intercept.AttachIntercept;
+import com.smallchill.system.model.Attach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,14 +51,16 @@ public abstract class CurdController<M> extends BaseController {
 	CurdService service;
 
 	private final BladeController ctrl = this;
+
 	/** 自定义拦截器 **/
-	private MetaIntercept intercept = null;
-	private Class<M> modelClass;
-	private IMeta metaFactory;
-	private String controllerKey;
-	private String paraPrefix;
-	private Map<String, Object> switchMap;
-	private Map<String, String> renderMap;
+    private MetaIntercept intercept;
+    private Class<M> modelClass;
+    private IMeta metaFactory;
+    private String basePath;
+    private String controllerKey;
+    private String paraPrefix;
+    private Map<String, Object> switchMap;
+    private Map<String, String> renderMap;
 	private Map<String, String> sourceMap;
 
 	@SuppressWarnings("unchecked")
@@ -65,27 +71,77 @@ public abstract class CurdController<M> extends BaseController {
 	}
 
 	private void init() {
-		this.modelClass = getClazz();
-		this.metaFactory = ClassKit.newInstance(metaFactoryClass());
-		this.controllerKey = metaFactory.controllerKey();
-		this.paraPrefix = metaFactory.paraPrefix();
-		this.switchMap = metaFactory.switchMap();
-		this.renderMap = metaFactory.renderMap();
-		this.sourceMap = metaFactory.sourceMap();
-		this.intercept = ClassKit.newInstance(metaFactory.intercept());
-	}
+        if (metaFactoryClass() != null) {
+            this.metaFactory = ClassKit.newInstance(metaFactoryClass());
+            this.controllerKey = metaFactory.controllerKey();
+            this.paraPrefix = metaFactory.paraPrefix();
+            this.switchMap = metaFactory.switchMap();
+            this.renderMap = metaFactory.renderMap();
+            this.sourceMap = metaFactory.sourceMap();
+            this.intercept = ClassKit.newInstance(metaFactory.intercept());
+        } else {
+            this.basePath = setBasePath();
+            this.modelClass = getClazz();
+            this.controllerKey = controllerKey();
+            this.paraPrefix = paraPrefix();
+            this.renderMap = renderMap();
+            this.switchMap = switchMap();
+            this.sourceMap = sourceMap();
+            this.intercept = intercept();
+        }
+    }
+
+    public MetaIntercept intercept() {
+        return null;
+    }
+
+    public String controllerKey() {
+        if (this.controllerKey == null)
+            throw new NoInitControllerException("未初始化控制器代码.");
+        return null;
+    }
+
+    public String paraPrefix() {
+        return getTableName((Class<BaseModel>) modelClass);
+    }
+
+    public String setBasePath() {
+        return "/modules/platform/";
+    }
+
+    public Map<String, String> renderMap() {
+        Map<String, String> renderMap = new HashMap<>();
+        renderMap.put(KEY_INDEX, basePath + controllerKey + "/" + controllerKey + ".html");
+        renderMap.put(KEY_ADD, basePath + controllerKey + "/" + controllerKey + "_add.html");
+        renderMap.put(KEY_EDIT, basePath + controllerKey + "/" + controllerKey + "_edit.html");
+        renderMap.put(KEY_VIEW, basePath + controllerKey + "/" + controllerKey + "_view.html");
+        return renderMap;
+    }
+
+    public Map<String, String> sourceMap() {
+        Map<String, String> sourceMap1 = new HashMap<>();
+        sourceMap1.put(KEY_INDEX, controllerKey.concat(".sourceList"));
+        return sourceMap1;
+    }
+
+    public Map<String, Object> switchMap() {
+        return null;
+    }
+
 
 	public CurdController() {
 		this.init();
 	}
 
-	protected abstract Class<? extends IMeta> metaFactoryClass();
+    protected Class<? extends IMeta> metaFactoryClass() {
+        return null;
+    }
 
-	/**
-	 * 前端字段混淆map翻转
-	 * 
-	 * @return Map<String,String>
-	 */
+    /**
+     * 前端字段混淆map翻转
+     *
+     * @return Map<String,String>
+     */
 	protected Map<String, Object> reverseMap() {
 		if (Func.isEmpty(switchMap)) {
 			return null;
@@ -290,11 +346,11 @@ public abstract class CurdController<M> extends BaseController {
 	}
 
 	private Map<String, Object> find(String source, Map<String, Object> map) {
-		if (source.indexOf("select") == -1) {
-			return findOneById(source, map);
-		} else {
-			return findOneBySql(source, map);
-		}
+        if (!source.contains("select")) {
+            return findOneById(source, map);
+        } else {
+            return findOneBySql(source, map);
+        }
 	}
 
 	@SuppressWarnings("unchecked")

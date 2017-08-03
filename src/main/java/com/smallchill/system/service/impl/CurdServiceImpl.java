@@ -15,6 +15,9 @@
  */
 package com.smallchill.system.service.impl;
 
+import com.smallchill.core.base.model.BaseModel;
+import com.smallchill.core.base.model.DataModel;
+import com.smallchill.core.shiro.ShiroKit;
 import org.springframework.stereotype.Service;
 
 import com.smallchill.core.aop.AopContext;
@@ -26,16 +29,19 @@ import com.smallchill.core.toolbox.grid.GridManager;
 import com.smallchill.core.toolbox.support.Convert;
 import com.smallchill.system.service.CurdService;
 
+import java.util.Date;
+
 @Service
 public class CurdServiceImpl implements CurdService {
 
 	public boolean save(BladeController ctrl, Object model, Class<?> modelClass,
 			MetaIntercept intercept) {
 		AopContext ac = null;
-		if (null != intercept) {
-			ac = new AopContext(ctrl, model);
-			intercept.saveBefore(ac);
-		}
+
+        if (null != intercept) {
+            ac = new AopContext(ctrl, model);
+            intercept.saveBefore(ac);
+        }
 		String rtid = Blade.create(modelClass).saveRtStrId(model);
 		boolean tempAfter = true;
 		if (null != intercept && rtid.length() > 0) {
@@ -48,10 +54,11 @@ public class CurdServiceImpl implements CurdService {
 	public boolean update(BladeController ctrl, Object model,
 			Class<?> modelClass, MetaIntercept intercept) {
 		AopContext ac = null;
-		if (null != intercept) {
-			ac = new AopContext(ctrl, model);
-			intercept.updateBefore(ac);
-		}
+
+        if (null != intercept) {
+            ac = new AopContext(ctrl, model);
+            intercept.updateBefore(ac);
+        }
 		boolean temp = Blade.create(modelClass).update(model);
 		boolean tempAfter = true;
 		if (null != intercept && temp) {

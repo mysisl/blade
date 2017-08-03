@@ -22,7 +22,7 @@
 	<!-- 注册sqlmanager(主库) -->
 	<bean id="sqlManager" class="org.beetl.sql.ext.spring4.SqlManagerFactoryBean">
 		<property name="nc">
-			<bean class="org.beetl.sql.core.DefaultNameConversion"></bean>
+			<bean class="org.beetl.sql.core.UnderlinedNameConversion"></bean>
 		</property>
 		<property name="interceptors">
 			<list>

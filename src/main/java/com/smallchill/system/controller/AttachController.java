@@ -28,9 +28,7 @@ import com.smallchill.system.model.Attach;
 public class AttachController extends CurdController<Attach>{
 
 	@Override
-	protected Class<? extends IMeta> metaFactoryClass() {
-		
-		return AttachFactory.class;
+	public String controllerKey() {
+		return "attach";
 	}
-
 }
