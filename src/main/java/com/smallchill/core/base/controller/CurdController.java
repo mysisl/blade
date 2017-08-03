@@ -72,6 +72,7 @@ public abstract class CurdController<M> extends BaseController {
 
 	private void init() {
         if (metaFactoryClass() != null) {
+            this.modelClass = getClazz();
             this.metaFactory = ClassKit.newInstance(metaFactoryClass());
             this.controllerKey = metaFactory.controllerKey();
             this.paraPrefix = metaFactory.paraPrefix();
