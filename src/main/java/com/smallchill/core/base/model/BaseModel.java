@@ -16,10 +16,6 @@
 package com.smallchill.core.base.model;
 
 import com.smallchill.core.shiro.ShiroKit;
-import com.sun.javafx.beans.IDProperty;
-import javafx.beans.DefaultProperty;
-import org.beetl.sql.core.annotatoin.InsertIgnore;
-
 import java.io.Serializable;
 import java.util.Date;
 
