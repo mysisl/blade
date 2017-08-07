@@ -1,8 +1,8 @@
-package com.ysisl.controller;
+package com.business.ysisl.controller;
 
 
 import com.smallchill.core.base.controller.CurdController;
-import com.ysisl.model.Account;
+import com.business.ysisl.model.Account;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 

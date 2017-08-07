@@ -24,6 +24,7 @@ import com.smallchill.core.base.model.BaseModel;
 import com.smallchill.core.exception.NoInitControllerException;
 import com.smallchill.system.meta.intercept.AttachIntercept;
 import com.smallchill.system.model.Attach;
+import org.beetl.sql.core.kit.StringKit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +49,7 @@ import com.smallchill.system.service.CurdService;
 public abstract class CurdController<M> extends BaseController {
 	
 	@Autowired
-	CurdService service;
+    public CurdService service;
 
 	private final BladeController ctrl = this;
 
@@ -258,9 +259,9 @@ public abstract class CurdController<M> extends BaseController {
 	@RequestMapping(KEY_REMOVE)
 	public AjaxResult remove() {
 		String ids = getParameter("ids");
-		boolean temp = service.deleteByIds(ctrl, ids, modelClass, intercept);
-		if (temp) {
-			if (null != intercept) {
+        boolean temp = service.delByIds(ctrl, ids, modelClass, intercept);
+        if (temp) {
+            if (null != intercept) {
 				AopContext ac = new AopContext(ctrl);
 				ac.setId(ids);
 				AjaxResult result = intercept.removeSucceed(ac);
@@ -276,9 +277,9 @@ public abstract class CurdController<M> extends BaseController {
 	@RequestMapping(KEY_DEL)
 	public AjaxResult del() {
 		String ids = getParameter("ids");
-		boolean temp = service.delByIds(ctrl, ids, modelClass, intercept);
-		if (temp) {
-			if (null != intercept) {
+        boolean temp = service.deleteByIds(ctrl, ids, modelClass, intercept);
+        if (temp) {
+            if (null != intercept) {
 				AopContext ac = new AopContext(ctrl);
 				ac.setId(ids);
 				AjaxResult result = intercept.delSucceed(ac);
@@ -319,9 +320,9 @@ public abstract class CurdController<M> extends BaseController {
 		String sort =  getParameter("sort", StrKit.EMPTY);
 		String order =  getParameter("order", StrKit.EMPTY);
 		if (StrKit.notBlank(sidx)) {
-			sort = sidx + " " + sord
-					+ (StrKit.notBlank(sort) ? ("," + sort) : StrKit.EMPTY);
-		}
+            sort = StringKit.enCodeUnderlined(sidx) + " " + sord
+                    + (StrKit.notBlank(sort) ? ("," + sort) : StrKit.EMPTY);
+        }
 		if (StrKit.isBlank(sourceMap.get(KEY_INDEX))) {
 			throw new RuntimeException(modelClass.getName() + "没有配置数据源！");
 		}

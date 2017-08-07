@@ -16,6 +16,9 @@
 package com.smallchill.core.base.model;
 
 import com.smallchill.core.shiro.ShiroKit;
+import org.beetl.sql.core.annotatoin.AutoID;
+import org.beetl.sql.core.annotatoin.Version;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -23,8 +26,11 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class BaseModel implements Serializable {
 
+    @Version
     private Integer version; //版本号
 
+
+    @AutoID
     private Integer id; //编号
     private Date created;   // 创建时间
     private Date updated;   // 更新时间

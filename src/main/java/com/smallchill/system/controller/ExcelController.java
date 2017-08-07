@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.util.HSSFColor;
+import org.beetl.sql.core.kit.StringKit;
 import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.params.ExcelExportEntity;
 import org.jeecgframework.poi.excel.entity.vo.MapExcelConstants;
@@ -62,7 +63,7 @@ public class ExcelController extends BaseController {
 		Object sort = _postdata.get("sort");
 		Object order = _postdata.get("order");
 		if (!Func.isEmpty(sidx)) {
-			sort = sidx + " " + sord + (Func.isEmpty(sort) ? ("," + sort) : "");
+			sort = StringKit.enCodeUnderlined(sidx.toString()) + " " + sord + (Func.isEmpty(sort) ? ("," + sort) : "");
 		}
 		String orderby = (Func.isOneEmpty(sort, order)) ? (" order by " + sort + " " + order) : "";
 		Map<String, Object> para = JsonKit.parse(Func.isEmpty(Func.decodeUrl(where)) ? null : Func.decodeUrl(where), HashMap.class);
@@ -102,9 +103,9 @@ public class ExcelController extends BaseController {
 					cnt++;
 					continue;
 				}
-				String name = m.get("name");
+				String name = StringKit.enCodeUnderlined(m.get("name"));
 				entityList.add(new ExcelExportEntity(_colname[cnt], name, Func.toInt(m.get("widthOrg"), 70) / 4));
-				sb.append(name).append(",");
+				sb.append("`").append(name).append("`").append(",");
 			}
 			cnt++;
 		}

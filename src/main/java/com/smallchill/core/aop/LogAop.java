@@ -32,7 +32,7 @@ public class LogAop {
 	private static Logger log = LogManager.getLogger(LogAop.class);
 
 	//@Pointcut("within(@org.springframework.stereotype.Controller *)")
-	@Pointcut("execution(* com.smallchill.*..service.*.*(..))")
+	@Pointcut("execution(* com.*.*..service.*.*(..))")
 	public void cutService() {
 	}
 

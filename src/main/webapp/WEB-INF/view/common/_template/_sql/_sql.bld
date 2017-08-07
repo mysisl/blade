@@ -1,7 +1,48 @@
-list
+sourceList
 ===
 select * from ${tableName}
 
 findOne
 ===
 select * from ${tableName} where ${pkName} = #{id}
+
+
+
+
+
+===
+INSERT INTO `blade_menu` (`code`, `pcode`, `alias`, `name`,
+                          `icon`, `url`, `num`, `levels`,
+                          `source`, `path`, `tips`, `status`, `isopen`,
+                          `istemplate`, `version`)
+VALUES
+  ('${tableName}', '0', '', '${desc}',
+                   'fa fa-group',
+                   '/${lowerModelName}/', '1', '1', NULL, NULL, NULL, 1, 0, NULL, 0)
+
+clearModelOperation
+===
+delete from blade_menu where pcode = '${tableName}'
+
+generateOperation
+===
+INSERT INTO `blade_menu` (`code`, `pcode`, `alias`, `name`,
+                          `icon`, `url`, `num`, `levels`,
+                          `source`, `path`, `tips`, `status`, `isopen`,
+                          `istemplate`, `version`)
+VALUES
+  ('${tableName}_add', '${tableName}', 'add', '增加',
+                   'btn btn-xs btn-white | fa fa-floppy-o bigger-120',
+                   '/${lowerModelName}/add', '1', '3', NULL, NULL, NULL, 1, 0, NULL, 0),
+  ('${tableName}_edit', '${tableName}', 'edit', '修改',
+                   'btn btn-xs btn-white | fa fa-pencil  bigger-120',
+                   '/${lowerModelName}/edit', '1', '3', NULL, NULL, NULL, 1, 0, NULL, 0),
+  ('${tableName}_view', '${tableName}', 'add', '查看',
+                   'btn btn-xs btn-white | fa fa-eye bigger-120',
+                   '/${lowerModelName}/view', '1', '3', NULL, NULL, NULL, 1, 0, NULL, 0),
+  ('${tableName}_del', '${tableName}', 'del', '增加',
+                   'btn btn-xs btn-white | fa fa-times  bigger-120',
+                   '/${lowerModelName}/del', '1', '3', NULL, NULL, NULL, 1, 0, NULL, 0)
+
+
+

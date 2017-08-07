@@ -348,6 +348,7 @@ public class Blade {
 	 * @return
 	 */
 	public boolean save(Object model) {
+		model = baseCreate(model);
 		return getSqlManager().insert(this.modelClass, model, false) > 0;
 	}
 
@@ -357,6 +358,7 @@ public class Blade {
 	 * @return
 	 */
 	public int saveRtId(Object model) {
+		model = baseCreate(model);
 		KeyHolder key = new KeyHolder();
 		int n = getSqlManager().insert(this.modelClass, model, key);
 		if (n > 0) {
@@ -372,6 +374,7 @@ public class Blade {
 	 * @return
 	 */
 	public String saveRtStrId(Object model) {
+		model = baseCreate(model);
 		KeyHolder key = new KeyHolder();
 		int n = getSqlManager().insert(this.modelClass, model, key);
 		if (n > 0) {
@@ -386,6 +389,7 @@ public class Blade {
 	 * @param model
 	 */
 	public boolean saveAndSetKey(Object model){
+		baseCreate(model);
 		return getSqlManager().insert(this.modelClass, model, true) > 0;
 	}
 	
@@ -422,6 +426,7 @@ public class Blade {
 	 * @return
 	 */
 	private boolean baseUpdate(Object model, boolean flag) {
+		model = baseUpdate(model);
 		Object idValue = this.getIdValue(model);
 		
 		if(Func.isEmpty(idValue)){
@@ -441,8 +446,8 @@ public class Blade {
 			if (modelForm.get(Const.OPTIMISTIC_LOCK.toLowerCase()) != null) { // 是否需要乐观锁控制
 				int versionDB = Func.toInt(modelOld.get(Const.OPTIMISTIC_LOCK.toLowerCase()), 0); // 数据库中的版本号
 				int versionForm = Func.toInt(modelForm.get(Const.OPTIMISTIC_LOCK.toLowerCase()), 1); // 表单中的版本号
-				if (!(versionForm > versionDB)) {
-					throw new RuntimeException("表单数据版本号和数据库数据版本号不一致，可能数据已经被其他人修改，请重新编辑");
+				if ((versionForm < versionDB)) {
+					throw new RuntimeException("数据版本号和数据库数据版本号不一致，可能数据已经被其他人修改，请重新编辑");
 				}
 			}
 		}
@@ -504,6 +509,7 @@ public class Blade {
 		if(Func.isEmpty(idValue)){
 			return saveAndSetKey(model);
 		} else {
+			model = baseUpdate(model);
 			return getSqlManager().updateTemplateById(model) > 0;
 		}
 	}
@@ -518,6 +524,7 @@ public class Blade {
 		if(Func.isEmpty(idValue)){
 			return saveAndSetKey(model);
 		} else {
+			model = baseUpdate(model);
 			return getSqlManager().updateById(model) > 0;
 		}
 	}
@@ -796,7 +803,7 @@ public class Blade {
 	 * @return
 	 */
 	public Object baseCreate(Object model) {
-		BaseModel dataObj = (DataModel) model;
+		BaseModel dataObj = (BaseModel) model;
 		if (BaseModel.class.isAssignableFrom(modelClass)) {
 			dataObj.setCreated(new Date());
 			dataObj.setCreatedBy((Integer) ShiroKit.getUser().getId());
@@ -814,12 +821,10 @@ public class Blade {
 	 * @return
 	 */
 	public Object baseUpdate(Object model) {
-		BaseModel dataObj = (DataModel) model;
-		if (DataModel.class.isAssignableFrom(modelClass)) {
+		BaseModel dataObj = (BaseModel) model;
+		if (BaseModel.class.isAssignableFrom(modelClass)) {
 			dataObj.setUpdated(new Date());
 			dataObj.setUpdatedBy((Integer) ShiroKit.getUser().getId());
-			dataObj.setVersion(dataObj.getVersion() == null
-					? 0 : dataObj.getVersion() + 1);
 			model = dataObj;
 		}
 		return dataObj;

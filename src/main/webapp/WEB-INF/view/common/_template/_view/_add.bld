@@ -17,12 +17,13 @@ ${"@"}layout("/common/_container.html"){
 							@ if(pkName == attr.name) {
 							@	continue;
 							@ }
-		${"@"}			  {name:"${_attrName}", index:"${attr.name}", type:"text", newline:true, length:8, required:"required"},
+							@ var _odd = attrLP.even;
+		${"@"}			  {name:"${_attrName}", index:"${attr.name}", type:"text", newline:${_odd}, length:3 },
 						@ }
 					@ }
 		
 		${"@"}		   ];
-		${"@"} include("/common/_curd/_add_table.html", {"col":_col, "table":_table}){}
+		${"@"} include("/common/_curd/_add.html", {"col":_col, "table":_table}){}
 		
 		<!-- 按钮 -->
 		${"@"} include("/common/_curd/_btn.html", {btn_save:"新增", btn_close:"关闭"}) {}

@@ -106,6 +106,7 @@ public class GenerateController extends CurdController<Generate> {
 			String modelName = gen.getModelname();
 			String upperModelName = StrKit.upperFirst(modelName);
 			String lowerModelName = StrKit.lowerFirst(modelName);
+			String desc = gen.getName();
 			
 			String tableName = gen.getTablename();
 			String pkName = gen.getPkname();
@@ -172,7 +173,7 @@ public class GenerateController extends CurdController<Generate> {
 			ps.put("lowerModelName", lowerModelName);
 			ps.put("tableName", tableName);
 			ps.put("pkName", pkName);
-			
+			ps.put("desc", desc);
 			//java
 			BeetlMaker.makeFile(controllerTemplatePath, ps, controllerPath);
 			BeetlMaker.makeFile(serviceTemplatePath, ps, servicePath);

@@ -19,6 +19,7 @@ ${"@"}SuppressWarnings("serial")
 public class ${modelName} extends BaseModel {
 
 	@for(attr in attrs){
+	@ select(attr.name){ case "id","created","createdBy","updated","updatedBy","version","sRoleId","sDeptId":continue;}
 	@		if(!isEmpty(attr.comment)){
 	private ${attr.type} ${attr.name}; //${attr.comment}
 	@		} else {
@@ -27,6 +28,7 @@ public class ${modelName} extends BaseModel {
 	@}
 	
 	@for(attr in attrs){
+	@ select(attr.name){ case "id","created","createdBy","updated","updatedBy","version","sRoleId","sDeptId":continue;}
 	public ${attr.type} get${attr.methodName}() {
 		return ${attr.name};
 	}

@@ -34,7 +34,7 @@ ${"@"}layout("/common/_container.html"){
 		
 		jQuery(grid_selector).jqGrid({
 			url : grid_url,
-		    shrinkToFit : true,
+		    shrinkToFit : false,
 			colNames : _colnames,
 			colModel : _colmodel, 
 			jsonReader : {id :"${pkName}"},

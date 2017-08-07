@@ -43,5 +43,10 @@ public interface ConstConfig {
 	String COMPRESS = pool.get("config.compress");
 	String COMPRESS_SCALE = pool.get("config.compressScale");
 	String COMPRESS_FLAG = pool.get("config.compressFlag");
-	
+
+    // 腾讯云配置
+    String ITEM_UPLOAD_URL = pool.get("tencent.itemUploadUrl");
+    String ACTION_UPLOAD_URL = pool.get("tencent.actionUploadUrl");
+    String SR_GET_URL = pool.get("tencent.srGetUrl");
+
 }

@@ -275,15 +275,6 @@ public class BaseService<M> implements IService<M>, ConstCurd {
     }
 
     public boolean save(M model, AopContext ac, ICURD intercept) {
-        if (modelClass.isAssignableFrom(DataModel.class)) {
-            DataModel dataObj = (DataModel) model;
-            dataObj.setCreated(new Date());
-            dataObj.setCreatedBy((Integer) ShiroKit.getUser().getId());
-            dataObj.setUpdated(new Date());
-            dataObj.setUpdatedBy((Integer) ShiroKit.getUser().getId());
-            dataObj.setVersion(0);
-
-        }
         if (null != intercept) {
             ac.setObject(model);
             intercept.saveBefore(ac);
@@ -298,14 +289,7 @@ public class BaseService<M> implements IService<M>, ConstCurd {
     }
 
     public boolean update(M model, AopContext ac, ICURD intercept) {
-        if (modelClass.isAssignableFrom(DataModel.class)) {
-            DataModel dataObj = (DataModel) model;
-            dataObj.setUpdated(new Date());
-            dataObj.setUpdatedBy((Integer) ShiroKit.getUser().getId());
-            dataObj.setVersion(dataObj.getVersion() == null
-                    ? 1 : dataObj.getVersion() + 1);
 
-        }
         if (null != intercept) {
             ac.setObject(model);
 
