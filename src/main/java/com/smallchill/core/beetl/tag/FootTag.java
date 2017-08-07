@@ -25,9 +25,9 @@ import com.smallchill.core.toolbox.kit.DateKit;
 
 public class FootTag extends Tag {
 
-	public static String company = "smallchill@163.com";
-	public static String customer = "smallchill";
-	
+    public static String company = "ysisl.work@gmail.com";
+    public static String customer = "ysisl";
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public void render() {
