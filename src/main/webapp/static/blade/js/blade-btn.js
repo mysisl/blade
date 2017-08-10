@@ -53,9 +53,9 @@ var exwhere;
         	    maxmin: true,
         	    content: blade_url
         	});
-        	if(flag){
+            //if(flag){
         		layer.full(index);
-        	}
+            //}
     	}
     };
     
@@ -499,4 +499,47 @@ function initMenuBtn(obj, code) {
     });
     ajax.set("code", code);
     ajax.start();
+}
+
+
+function btnInvoke(btn, methods) {
+    var ids = getGridXls().join(",");
+    var rows = getGridXls().length;
+    if (rows == 0) {
+        layer_alert("请选择一条数据!", "warn");
+        return;
+    }
+    for (var i = 0; i < methods.length; i++) {
+        if (btn.id == methods[i].id) {
+            if (methods[i].isPage && methods[i].url != null) {
+                btn.open(methods[i].url, "", btn.isopen);
+                return;
+            }
+            if (btn.url != "")    // 按钮动作 - 弹出层
+            {
+                btn.open(btn.url + "?ids=" + ids, "", btn.isopen);
+                return;
+            }
+            else {
+                // 按钮 - 请求响应
+                layer.confirm(methods[i].confirm, {
+                    icon: 3,
+                    btn: ['确定', '取消'] //按钮
+                }, function () {
+                    $.post(methods[i].url, {ids: ids}, function (data) {
+                        if (data.code === 0) {
+                            layer_alert(data.message, "success");
+                        } else {
+                            layer_post(data);
+                        }
+                    }, "json");
+
+                }, function () {
+                    //layer.msg('已取消');
+                });
+                return;
+            }
+        }
+    }
+
 }

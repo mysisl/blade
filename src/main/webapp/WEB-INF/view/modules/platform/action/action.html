@@ -16,11 +16,6 @@
     function initGrid() {
         var grid_url = "${ctxPath}/${code}/list";
         var _colnames = ["id",
-            "创建人",
-            "部门ID",
-            "角色ID",
-            "更新人",
-            "版本号",
             "行为发生时间",
             "行为类型",
             "bid",
@@ -40,14 +35,14 @@
             "行为id",
             "账号",
             "账号类型",
+            "创建人",
+            "部门ID",
+            "角色ID",
+            "更新人",
+            "版本号",
             "创建时间",
             "更新时间"];
         var _colmodel = [{name: "id", index: "id", width: 100},
-            {name: "createdBy", index: "createdBy", width: 100},
-            {name: "sDeptId", index: "sDeptId", width: 100},
-            {name: "sRoleId", index: "sRoleId", width: 100},
-            {name: "updatedBy", index: "updatedBy", width: 100},
-            {name: "version", index: "version", width: 100},
             {name: "actionTime", index: "actionTime", width: 100},
             {name: "actionType", index: "actionType", width: 100},
             {name: "bid", index: "bid", width: 100},
@@ -67,6 +62,11 @@
             {name: "traceId", index: "traceId", width: 100},
             {name: "uid", index: "uid", width: 100},
             {name: "uidType", index: "uidType", width: 100},
+            {name: "createdBy", index: "createdBy", width: 100},
+            {name: "sDeptId", index: "sDeptId", width: 100},
+            {name: "sRoleId", index: "sRoleId", width: 100},
+            {name: "updatedBy", index: "updatedBy", width: 100},
+            {name: "version", index: "version", width: 100},
             {name: "created", index: "created", width: 100},
             {name: "lastUpd", index: "lastUpd", width: 100}];
 

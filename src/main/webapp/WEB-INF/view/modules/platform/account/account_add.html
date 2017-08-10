@@ -14,7 +14,8 @@
     @ {name:"客户名称", index:"name", type:"text", newline:true, length:3, required:"required"},
     @ {name:"电话号码", index:"phone", type:"text", newline:false, length:3, required:"required"},
     @ {name:"性别", index:"sex", type:"select_101",newline:true, length:3, required:"required"},
-    @ {name:"创建时间", index:"created", type:"laydate", newline:false, length:3}
+    @ {name:"创建时间", index:"created", type:"laydate", newline:false, length:3},
+    @ {name:"微信ID", index:"wechatId", type:"text", newline:true, length:3}
     @ ];
     @ include("/common/_curd/_add.html", {"col":_col, "table":_table}){}
 

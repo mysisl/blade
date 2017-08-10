@@ -72,7 +72,10 @@ public class TencentUploadImpl implements TecentUpload {
         String msg = jsonObj.getString("msg");
         suggestRequest.setSyncCode(code);
         suggestRequest.setSyncMsg(msg);
-        Blade.create(Item.class).update(suggestRequest);
+        Blade.create(SuggestRequest.class).update(suggestRequest);
+
+        if (!code.equals("0"))
+            return suggestRequest;
 
         //获取返回的行参数
         JSONArray weightArray = jsonObj.getJSONArray("data");

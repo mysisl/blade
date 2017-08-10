@@ -16,6 +16,7 @@
     function initGrid() {
         var grid_url = "${ctxPath}/${code}/list";
         var _colnames = ["编号",
+            "微信ID",
             "客户名称",
             "电话号码",
             "性别",
@@ -27,6 +28,7 @@
             "所属部门"
         ];
         var _colmodel = [{name: "id", index: "id", width: 100},
+            {name: "wechatId", index: "wechatId", width: 100},
             {name: "name", index: "name", width: 100},
             {name: "phone", index: "phone", width: 100},
             {name: "sex", index: "sex", width: 100},
@@ -57,6 +59,7 @@
         <!-- 配置 查询 -->
         @ var _col=[
         @ {name:"编号", index:"id", type:"text"},
+        @ {name:"微信ID", index:"wechatId", type:"text"},
         @ {name:"地址", index:"address", type:"text"},
         @ {name:"客户名称", index:"name", type:"text"},
         @ {name:"电话号码", index:"phone", type:"text"},
@@ -78,6 +81,6 @@
 </div>
 
 <!-- 引入所需的js -->
-@include("/common/_listscript.html", {isExport : false}) {}
+@include("/common/_listscript.html", {isExport : true}) {}
 
 @}	

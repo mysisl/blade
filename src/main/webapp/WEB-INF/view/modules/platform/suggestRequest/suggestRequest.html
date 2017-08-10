@@ -16,12 +16,7 @@
     function initGrid() {
         var grid_url = "${ctxPath}/${code}/list";
         var _colnames = ["id",
-            "创建人",
-            "部门ID",
-            "角色ID",
-            "更新人",
-            "版本号",
-            "bid",
+
             "当前物料",
             "城市",
             "国家",
@@ -35,15 +30,16 @@
             "服务类型",
             "账号",
             "账号类型",
+            "创建人",
+            "部门ID",
+            "角色ID",
+            "更新人",
+            "版本号",
+            "bid",
             "创建时间",
             "更新时间"];
         var _colmodel = [{name: "id", index: "id", width: 100},
-            {name: "createdBy", index: "createdBy", width: 100},
-            {name: "sDeptId", index: "sDeptId", width: 100},
-            {name: "sRoleId", index: "sRoleId", width: 100},
-            {name: "updatedBy", index: "updatedBy", width: 100},
-            {name: "version", index: "version", width: 100},
-            {name: "bid", index: "bid", width: 100},
+
             {name: "cid", index: "cid", width: 100},
             {name: "city", index: "city", width: 100},
             {name: "country", index: "country", width: 100},
@@ -57,6 +53,12 @@
             {name: "serviceType", index: "serviceType", width: 100},
             {name: "uid", index: "uid", width: 100},
             {name: "uidType", index: "uidType", width: 100},
+            {name: "createdBy", index: "createdBy", width: 100},
+            {name: "sDeptId", index: "sDeptId", width: 100},
+            {name: "sRoleId", index: "sRoleId", width: 100},
+            {name: "updatedBy", index: "updatedBy", width: 100},
+            {name: "version", index: "version", width: 100},
+            {name: "bid", index: "bid", width: 100},
             {name: "created", index: "created", width: 100},
             {name: "lastUpd", index: "lastUpd", width: 100}];
 
@@ -71,31 +73,21 @@
         });
     }
 
+    // 扩展按钮注册
     function btnCallBack(btn) {
-        if (btn.id == "sr_upload") {
-            var ids = getGridXls().join(",");
-            var rows = getGridXls().length;
-            if (rows == 0) {
-                layer_alert("请选择一条数据!", "warn");
-                return;
+        var ids = getGridXls().join(",");
+        btnInvoke(btn, [
+            {
+                id: "sr_upload",
+                confirm: "是否确定请求推荐数据",
+                url: "${ctxPath}/${code}/getsr"
+            },
+            {
+                id: "sr_item",
+                isPage: true,
+                url: "${ctxPath}/responseItem/?requestId=" + ids
             }
-            layer.confirm("是否确定请求推荐数据？", {
-                icon: 3,
-                btn: ['确定', '取消'] //按钮
-            }, function () {
-                $.post("${ctxPath}/${code}/getsr", {ids: ids}, function (data) {
-                    if (data.code === 0) {
-                        layer_alert(data.message, "success");
-                    } else {
-                        layer_post(data);
-                    }
-                }, "json");
-
-            }, function () {
-                //layer.msg('已取消');
-            });
-            return;
-        }
+        ])
     }
 </script>
 

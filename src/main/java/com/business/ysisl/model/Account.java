@@ -17,7 +17,15 @@ public class Account extends BaseModel {
     private String name; //客户名称
     private String phone; //电话号码
     private String sex; //性别
+    private String wechatId; // 微信ID
 
+    public String getWechatId() {
+        return wechatId;
+    }
+
+    public void setWechatId(String wechatId) {
+        this.wechatId = wechatId;
+    }
 
     public Integer getDeptId() {
         return deptId;

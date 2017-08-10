@@ -18,7 +18,7 @@ import org.beetl.sql.core.annotatoin.Table;
 public class SuggestRequest extends BaseModel {
 
     private String md5; // md5(bid&request_id&TOKEN)
-    private String service_type; // 服务类型。0：pCTR，1：流量优选，2：pCVR，3：个性化推荐（默认），4：物料优选
+    private String serviceType; // 服务类型。0：pCTR，1：流量优选，2：pCVR，3：个性化推荐（默认），4：物料优选
     private String requestId; // request_id 为“毫秒级时间戳随机数”
     private String bid; // 腾讯云为该业务分配的业务标识
     private String uidType; // 0：QQ，1：微信号，3：设备号imei/idfa或其md5值（默认），4：手机号
@@ -41,14 +41,6 @@ public class SuggestRequest extends BaseModel {
 
     public void setMd5(String md5) {
         this.md5 = md5;
-    }
-
-    public String getService_type() {
-        return service_type;
-    }
-
-    public void setService_type(String service_type) {
-        this.service_type = service_type;
     }
 
     public String getRequestId() {
@@ -161,5 +153,14 @@ public class SuggestRequest extends BaseModel {
 
     public void setSyncMsg(String syncMsg) {
         this.syncMsg = syncMsg;
+    }
+
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
     }
 }

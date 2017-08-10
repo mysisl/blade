@@ -3,15 +3,20 @@ package com.business.recommend.controller;
 import com.business.recommend.model.Item;
 import com.business.recommend.service.TecentUpload;
 import com.smallchill.core.annotation.Json;
+import com.smallchill.core.aop.AopContext;
 import com.smallchill.core.base.controller.CurdController;
 import com.smallchill.core.plugins.dao.Blade;
 import com.smallchill.core.toolbox.CMap;
+import com.smallchill.core.toolbox.Func;
 import com.smallchill.core.toolbox.ajax.AjaxResult;
 import com.smallchill.core.toolbox.support.Convert;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.business.recommend.model.SuggestRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -39,7 +44,7 @@ public class SuggestRequestController extends CurdController<SuggestRequest> {
 
         SuggestRequest SuggestRequest = new SuggestRequest();
         SuggestRequest.setMd5("testmd5");
-        SuggestRequest.setService_type("3");
+        SuggestRequest.setServiceType("3");
         SuggestRequest.setRequestId(String.valueOf(System.currentTimeMillis()));
         SuggestRequest.setBid("b_teg_openrecom_ujwu65iquql72ugizntl");
         SuggestRequest.setUidType("0");
